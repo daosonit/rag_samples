@@ -1,0 +1,67 @@
+services:
+  neo4j:
+    image: neo4j:5.20.0-community
+    container_name: graphrag-neo4j-prod
+    restart: unless-stopped
+    ports:
+      - "${NEO4J_BIND_ADDRESS:-127.0.0.1}:7474:7474"
+      - "${NEO4J_BIND_ADDRESS:-127.0.0.1}:7687:7687"
+    networks:
+      - graphrag-network
+    environment:
+      # Authentication
+      - NEO4J_AUTH=${NEO4J_USERNAME:-neo4j}/${NEO4J_PASSWORD}
+
+      # JVM Performance Tuning (Optimized for Graph queries)
+      - NEO4J_server_memory_heap_initial__size=${NEO4J_HEAP_INITIAL_SIZE:-1G}
+      - NEO4J_server_memory_heap_max__size=${NEO4J_HEAP_MAX_SIZE:-2G}
+      - NEO4J_server_memory_pagecache_size=${NEO4J_PAGECACHE_SIZE:-1G}
+      
+      # Plugins & Security
+      - NEO4J_PLUGINS=["apoc"]
+      - NEO4J_dbms_security_procedures_unrestricted=apoc.*
+      - NEO4J_dbms_security_procedures_allowlist=apoc.*
+      - NEO4J_dbms_security_allow__csv__import__from__file__urls=true
+
+      # Logs, Monitoring & Timezone
+      - NEO4J_server_logs_debug_enabled=false
+      - NEO4J_server_metrics_prometheus_enabled=true
+      - NEO4J_dbms_tx__log_rotation_retention__policy=1 days
+      - TZ=Asia/Ho_Chi_Minh
+
+      # Query Management (Chống treo DB)
+      - NEO4J_dbms_transaction_timeout=30s
+
+    volumes:
+      - ./data/neo4j/data:/data
+      - ./data/neo4j/logs:/logs
+      - ./data/neo4j/import:/var/lib/neo4j/import
+      - ./data/neo4j/plugins:/plugins
+
+    # Resource constraints (Optional but recommended to prevent OOM kills on host)
+    deploy:
+      resources:
+        limits:
+          memory: 4G
+          cpus: '2.0'
+        reservations:
+          memory: 2G
+
+    # Healthcheck ensures dependent services only start when DB is ready
+    healthcheck:
+      test: ["CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:7474 || exit 1"]
+      interval: 10s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+
+    # Logging rotation to prevent disk full
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+        max-file: "3"
+
+networks:
+  graphrag-network:
+    driver: bridge

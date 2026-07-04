@@ -1,0 +1,35 @@
+# Môi trường ảo (Virtual Environments)
+.venv/
+venv/
+env/
+ENV/
+
+# Biến môi trường & Khóa bí mật (RẤT QUAN TRỌNG)
+.env
+.env.*
+*.pem
+*.key
+
+# Thư mục chứa mô hình tải về (Nặng, không nên đẩy lên Git)
+local_models/
+models/
+
+# Bộ nhớ đệm Python (Python Caches)
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.ruff_cache/
+
+# Tệp hệ điều hành (OS Files)
+.DS_Store
+Thumbs.db
+
+# Cấu hình IDE (IDE Configs)
+.vscode/
+.idea/
+
+# Thư mục tải về tạm thời của các thư viện HuggingFace
+.cache/
+huggingface/
+local_models/
