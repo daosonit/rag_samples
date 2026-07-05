@@ -25,7 +25,7 @@ services:
 
       # Logs, Monitoring & Timezone
       - NEO4J_server_logs_debug_enabled=false
-      - NEO4J_server_metrics_prometheus_enabled=true
+      # - NEO4J_server_metrics_prometheus_enabled=true
       - NEO4J_dbms_tx__log_rotation_retention__policy=1 days
       - TZ=Asia/Ho_Chi_Minh
 
