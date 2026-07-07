@@ -100,45 +100,45 @@ _Mục tiêu: Nắm vững hệ thống Microsoft GraphRAG - chuẩn mực hiệ
 _Mục tiêu: Đưa GraphRAG vào Production, giảm chi phí, tăng tính linh hoạt._
 
 ### [x] Bài 4.1: Kiến trúc Hybrid (Vector + Graph)
+
 - Graph không hoàn hảo để search semantic, Vector thì không hiểu quan hệ. -> Cần gộp cả hai.
 - Thiết kế hệ thống: Khớp Entity bằng Vector Search, sau đó mở rộng bằng Graph Traversal.
 - Thuật toán Reranking kết hợp điểm số Vector và Graph.
 
-### [/] Bài 4.2: Bài toán Entity Resolution (Giải quyết thực thể)
+### [x] Bài 4.2: Bài toán Entity Resolution (Giải quyết thực thể)
 
 - Làm sao xử lý khi Graph có cả "Steve Jobs", "S. Jobs", "CEO Apple" nhưng đều chỉ 1 người?
 - Entity Deduplication (Gộp thực thể) bằng các mô hình nhúng văn bản hoặc LLM.
 
-### Bài 4.3: Tối ưu chi phí trích xuất đồ thị (Cost Optimization)
+### [x] Bài 4.3: Tối ưu chi phí trích xuất đồ thị (Cost Optimization)
 
 - Không dùng GPT-4 cho mọi bước. Sử dụng SLM (Small Language Models) như Llama 3 8B, hoặc mô hình chuyên dụng cho Information Extraction (như GLiNER, REBEL) để giảm chi phí 90%.
 
-### Bài 4.4: Dynamic Graph Updates (Cập nhật đồ thị động)
+### [x] Bài 4.4: Dynamic Graph Updates (Cập nhật đồ thị động)
 
 - Cách thiết kế hệ thống khi có document mới thêm vào: Chỉ upsert các Node/Edge mới và cập nhật lại cụm (Community) bị ảnh hưởng, thay vì build lại từ đầu.
 
 ---
 
-## 🎓 CHẶNG 5: CẤP ĐỘ GIÁO SƯ (PROFESSOR / RESEARCHER)
+## 🎓 [/] CHẶNG 5: CẤP ĐỘ GIÁO SƯ (PROFESSOR / RESEARCHER)
 
 _Mục tiêu: Đủ khả năng đọc hiểu các Paper mới nhất, đánh giá hệ thống và tự thiết kế Framework của riêng bạn._
 
-### Bài 5.1: Đánh giá hệ thống (GraphRAG Evaluation)
+### [x] Bài 5.1: Đánh giá hệ thống (Evaluation metrics)
 
 - Làm sao biết GraphRAG tốt hơn Vector RAG trong Use-case của bạn?
 - Các Metrics: Độ bao phủ của Graph (Graph Completeness), Độ chính xác quan hệ (Relation Accuracy), Comprehensiveness & Diversity (theo paper của Microsoft).
 
-### Bài 5.2: Khám phá kiến trúc tương lai & Các báo cáo khoa học (Papers)
+### [x] Bài 5.2: Tương lai của Knowledge Graph và LLM và các báo cáo khoa học (Papers)
 
 - Nghiên cứu các phương pháp kết hợp LLM Reasoning với Graph:
   - **RoG (Reasoning on Graphs):** LLM tạo ra các đường đi (paths) trên graph trước khi sinh câu trả lời.
   - **G-Retriever:** Graph Neural Networks (GNNs) kết hợp với LLM.
 - Multi-Agent GraphRAG: Các Agents cùng nhau đi trên đồ thị để thu thập manh mối (Clues).
 
-### Bài 5.3: Đồ án tốt nghiệp (The Masterpiece)
+### [x] Bài 5.3: Đồ án tốt nghiệp (The Masterpiece)
 
-- **Đề bài:** Tự build một thư viện "Mini-GraphRAG" bằng Python:
-  1. Input: Tập tin PDF.
+- Xây dựng file tổng hợp toàn bộ kiến thức. Input: Tập tin PDF.
   2. Dùng LLM trích xuất Triples, lưu vào Neo4j.
   3. Áp dụng thuật toán nhúng (Node2Vec) hoặc nhúng nội dung Node vào Milvus/Qdrant.
   4. Viết Router Agent: Tự quyết định câu hỏi nào dùng Vector Search, câu hỏi nào dùng Graph Traversal.

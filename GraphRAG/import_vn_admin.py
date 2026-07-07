@@ -1,14 +1,16 @@
 import requests
+import os
 from neo4j import GraphDatabase
+from dotenv import load_dotenv
 
+load_dotenv(override=True)
 # ==========================================
 # CẤU HÌNH KẾT NỐI NEO4J
 # Bạn hãy sửa thông tin đăng nhập nếu cần
 # ==========================================
-NEO4J_URI = "neo4j://192.168.1.99:7687"
-NEO4J_USER = "neo4j"
-NEO4J_PASSWORD = "SecurePassword_123!"  # <<< Thay bằng mật khẩu thực tế của bạn
-
+NEO4J_URI = os.getenv("NEO4J_URI")
+NEO4J_USER = os.getenv("NEO4J_USERNAME")
+NEO4J_PASSWORD = os.getenv("NEO4J_PASSWORD")
 # API lấy dữ liệu hành chính Việt Nam (có bao gồm Tỉnh, Huyện, Xã)
 API_URL = "https://provinces.open-api.vn/api/?depth=3"
 
